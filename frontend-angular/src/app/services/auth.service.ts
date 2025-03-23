@@ -3,6 +3,32 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../environments/environment';
+
+export interface UserRegister {
+  email: string;
+  username: string;
+  password: string;
+}
+
+export interface UserLogin {
+  username: string;
+  password: string;
+}
+
+export interface Token {
+  access_token: string;
+  token_type: string;
+  refresh_token: string;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  username: string;
+  is_active: boolean;
+  is_superuser: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +36,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<any>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-  private readonly API_URL = 'http://localhost:8000';
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   constructor(
     private http: HttpClient,
@@ -24,28 +50,33 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string): Observable<any> {
-    const formData = new FormData();
-    formData.append('username', email);
-    formData.append('password', password);
+  register(userData: UserRegister): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/register`, userData);
+  }
 
-    return this.http.post<any>(`${this.API_URL}/auth/login`, formData)
-      .pipe(
-        tap(response => {
-          if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem('access_token', response.access_token);
-            localStorage.setItem('currentUser', JSON.stringify(response));
-          }
-          this.currentUserSubject.next(response);
-        })
-      );
+  login(credentials: UserLogin): Observable<Token> {
+    const formData = new FormData();
+    formData.append('username', credentials.username);
+    formData.append('password', credentials.password);
+    return this.http.post<Token>(`${this.apiUrl}/login`, formData);
+  }
+
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/me`);
+  }
+
+  setToken(token: Token): void {
+    localStorage.setItem('access_token', token.access_token);
+    localStorage.setItem('refresh_token', token.refresh_token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
   }
 
   logout(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('currentUser');
-      localStorage.removeItem('access_token');
-    }
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     this.currentUserSubject.next(null);
   }
 

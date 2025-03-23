@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService, UserLogin } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule]
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -42,9 +42,14 @@ export class LoginComponent {
     this.error = '';
 
     const { email, password } = this.loginForm.value;
+    const credentials: UserLogin = {
+      username: email,
+      password: password
+    };
 
-    this.authService.login(email, password).subscribe({
-      next: () => {
+    this.authService.login(credentials).subscribe({
+      next: (response) => {
+        this.authService.setToken(response);
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
