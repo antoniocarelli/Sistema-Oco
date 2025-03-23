@@ -1,0 +1,3 @@
+"""
+Pacote raiz da aplicação.
+""" 
