@@ -30,6 +30,11 @@ export interface User {
   is_superuser: boolean;
 }
 
+export interface ResetPassword {
+  token: string;
+  new_password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -59,6 +64,21 @@ export class AuthService {
     formData.append('username', credentials.username);
     formData.append('password', credentials.password);
     return this.http.post<Token>(`${this.apiUrl}/login`, formData);
+  }
+
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  verifyResetToken(token: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/verify-reset-token`, { token });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/reset-password`, {
+      token,
+      new_password: newPassword
+    });
   }
 
   getCurrentUser(): Observable<User> {

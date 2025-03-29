@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-python-dotenv
+python-dotenv==1.0.0
 sqlalchemy
 pydantic
 python-jose[cryptography]
@@ -10,3 +10,4 @@ pydantic_settings
 psycopg2-binary
 alembic
 pydantic[email]
+fastapi-mail==1.4.1

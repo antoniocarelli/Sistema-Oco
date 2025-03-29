@@ -40,4 +40,14 @@ class Token(BaseModel):
     refresh_token: str
 
 class TokenPayload(BaseModel):
-    sub: Optional[int] = None 
+    sub: Optional[int] = None
+
+class ForgotPassword(BaseModel):
+    email: EmailStr
+
+class ResetPassword(BaseModel):
+    token: str
+    new_password: str
+
+class VerifyResetToken(BaseModel):
+    token: str 

@@ -4,18 +4,24 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 import logging
+import os
 
 from app.core.database import get_db
 from app.core.security.base import SecurityBase
-from app.schemas.user import UserCreate, Token, UserInDBBase
+from app.schemas.user import UserCreate, Token, UserInDBBase, ForgotPassword, ResetPassword, VerifyResetToken
 from app.models.user import User
 from app.services.auth import (
     authenticate_user,
     create_user,
     get_current_active_user,
     create_access_token,
-    get_user_by_email
+    get_user_by_email,
+    get_password_hash,
+    generate_reset_token,
+    verify_reset_token,
+    clear_reset_token
 )
+from app.services.email import send_reset_password_email
 
 # Configuração do logger
 logging.basicConfig(level=logging.INFO)
@@ -81,4 +87,81 @@ def read_users_me(
     """
     Obtém informações do usuário atual.
     """
-    return current_user 
+    return current_user
+
+@router.post("/forgot-password")
+async def forgot_password(
+    *,
+    db: Session = Depends(get_db),
+    forgot_password_in: ForgotPassword,
+) -> Any:
+    """
+    Inicia o processo de recuperação de senha.
+    """
+    user = get_user_by_email(db, forgot_password_in.email)
+    if not user:
+        # Por segurança, não informamos se o email existe ou não
+        return {
+            "message": "Se o email existir, você receberá instruções para redefinir sua senha"
+        }
+    
+    # Gera o token de reset
+    reset_token = generate_reset_token(db, user)
+    
+    # Envia o e-mail com o link de reset
+    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:4200")
+    email_sent = await send_reset_password_email(user.email, reset_token, frontend_url)
+    
+    if not email_sent:
+        logger.error(f"Falha ao enviar e-mail de reset para {user.email}")
+        # Não informamos o erro ao usuário por segurança
+        return {
+            "message": "Se o email existir, você receberá instruções para redefinir sua senha"
+        }
+    
+    logger.info(f"E-mail de reset enviado com sucesso para {user.email}")
+    return {
+        "message": "Se o email existir, você receberá instruções para redefinir sua senha"
+    }
+
+@router.post("/reset-password")
+def reset_password(
+    *,
+    db: Session = Depends(get_db),
+    reset_password_in: ResetPassword,
+) -> Any:
+    """
+    Redefine a senha do usuário usando o token de reset.
+    """
+    user = verify_reset_token(db, reset_password_in.token)
+    if not user:
+        raise HTTPException(
+            status_code=400,
+            detail="Token inválido ou expirado",
+        )
+    
+    # Atualiza a senha
+    user.hashed_password = get_password_hash(reset_password_in.new_password)
+    
+    # Limpa o token após a senha ser alterada
+    clear_reset_token(db, user)
+    
+    return {"message": "Senha atualizada com sucesso"}
+
+@router.post("/verify-reset-token")
+def verify_reset_token_endpoint(
+    *,
+    db: Session = Depends(get_db),
+    token_data: VerifyResetToken,
+) -> Any:
+    """
+    Verifica se um token de reset é válido.
+    """
+    user = verify_reset_token(db, token_data.token)
+    if not user:
+        raise HTTPException(
+            status_code=400,
+            detail="Token inválido ou expirado",
+        )
+    
+    return {"message": "Token válido"} 

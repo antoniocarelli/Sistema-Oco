@@ -1,5 +1,5 @@
 # Estágio de build
-FROM node:18-alpine as build
+FROM node:20-alpine as build
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Build da aplicação
-RUN npm run build -- --configuration production
+RUN npm run build
 
 # Estágio de produção
 FROM nginx:alpine
