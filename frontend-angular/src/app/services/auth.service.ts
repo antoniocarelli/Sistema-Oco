@@ -39,7 +39,7 @@ export interface ResetPassword {
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<any>(null);
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   private apiUrl = `${environment.apiUrl}/auth`;
 
@@ -48,9 +48,9 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      const user = localStorage.getItem('currentUser');
-      if (user) {
-        this.currentUserSubject.next(JSON.parse(user));
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        this.loadCurrentUser();
       }
     }
   }
@@ -63,7 +63,12 @@ export class AuthService {
     const formData = new FormData();
     formData.append('username', credentials.username);
     formData.append('password', credentials.password);
-    return this.http.post<Token>(`${this.apiUrl}/login`, formData);
+    return this.http.post<Token>(`${this.apiUrl}/login`, formData).pipe(
+      tap(() => {
+        // Carregar as informações do usuário após o login bem-sucedido
+        this.loadCurrentUser();
+      })
+    );
   }
 
   forgotPassword(email: string): Observable<void> {
@@ -82,30 +87,54 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me`);
+    return this.http.get<User>(`${this.apiUrl}/me`, { headers: this.getAuthHeaders() });
+  }
+
+  loadCurrentUser(): void {
+    if (this.getToken()) {
+      this.getCurrentUser().subscribe({
+        next: (user) => {
+          this.currentUserSubject.next(user);
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+          }
+        },
+        error: (err) => {
+          console.error('Erro ao carregar usuário:', err);
+          if (err.status === 401) {
+            this.logout();
+          }
+        }
+      });
+    }
   }
 
   setToken(token: Token): void {
-    localStorage.setItem('access_token', token.access_token);
-    localStorage.setItem('refresh_token', token.refresh_token);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('access_token', token.access_token);
+      localStorage.setItem('refresh_token', token.refresh_token);
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem('access_token');
+    return isPlatformBrowser(this.platformId) ? localStorage.getItem('access_token') : null;
   }
 
   logout(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('currentUser');
+    }
     this.currentUserSubject.next(null);
   }
 
   isAuthenticated(): boolean {
-    return !!this.currentUserSubject.value;
+    return !!this.getToken();
   }
 
   getAuthHeaders(): HttpHeaders {
-    const token = isPlatformBrowser(this.platformId) ? localStorage.getItem('access_token') : null;
+    const token = this.getToken();
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'

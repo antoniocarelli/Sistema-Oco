@@ -50,7 +50,7 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (response) => {
         this.authService.setToken(response);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/welcome']);
       },
       error: (err) => {
         this.loading = false;
