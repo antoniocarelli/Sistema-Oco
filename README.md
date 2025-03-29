@@ -12,13 +12,12 @@
   <h3 align="center">Sistema oco</h3>
 
   <p align="center">
-    Uma breve descrição do que este projeto faz e quem ele é para.
+    Uma arquitetura completa e integrada com as três camadas essenciais (frontend, backend e banco de dados) funcionando em perfeita harmonia.
     <br />
-    <a href="https://github.com/antoniocarelli/Modelo"><strong>Explore a documentação »</strong></a>
+    Implementa um sistema robusto de autenticação que inclui cadastro de usuários, login seguro e mecanismo de recuperação de senha.
     <br />
+    <a href="https://github.com/antoniocarelli/Modelo"><strong>Explore a documentação</strong></a>
     <br />
-    <a href="https://github.com/antoniocarelli/Modelo">Ver Demo</a>
-    ·
     <a href="https://github.com/antoniocarelli/Modelo/issues">Reportar Bug</a>
     ·
     <a href="https://github.com/antoniocarelli/Modelo/issues">Solicitar Funcionalidade</a>
@@ -65,6 +64,9 @@ Este projeto é uma aplicação web moderna que consiste em:
 * Frontend em Angular
 * Backend em Python (FastAPI)
 * Banco de dados PostgreSQL
+
+O diferencial deste projeto é que foi desenvolvido integralmente utilizando Inteligência Artificial, sem nenhuma intervenção manual no código. Todo o desenvolvimento foi realizado com o auxílio do Cursor IDE, configurado com o modelo Claude 3.7 Sonnet como IA principal.
+
 
 <p align="right">(<a href="#sistema-oco">voltar ao topo</a>)</p>
 
@@ -131,20 +133,43 @@ Após a instalação, você pode acessar:
 
 ```
 .
-├── frontend-angular/     # Frontend Angular
-├── backend-python/       # Backend Python (FastAPI)
+├── frontend-angular/           # Frontend Angular
 │   ├── src/
-│   │   └── app/
-│   │       ├── core/
-│   │       │   └── config/
-│   │       │       └── config.py
-│   │       └── services/
-│   │           └── main.py
-│   ├── Dockerfile
-│   └── requirements.txt
-├── docker-compose.yml
-└── doc/
-    └── README.md
+│   │   ├── app/                # Código da aplicação Angular
+│   │   │   ├── components/     # Componentes reutilizáveis
+│   │   │   ├── pages/          # Componentes de página
+│   │   │   ├── services/       # Serviços para comunicação com a API
+│   │   │   ├── app.routes.ts   # Configuração de rotas
+│   │   │   └── app.config.ts   # Configurações da aplicação
+│   │   ├── environments/       # Configurações de ambiente (dev/prod)
+│   │   └── assets/             # Imagens e outros recursos estáticos
+│   ├── Dockerfile              # Configuração para build do frontend
+│   ├── nginx.conf              # Configuração do servidor web Nginx
+│   ├── package.json            # Dependências do projeto
+│   └── angular.json            # Configuração do Angular CLI
+│
+├── backend-python/             # Backend Python (FastAPI)
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── core/           # Componentes principais da aplicação
+│   │   │   │   └── config/     # Configurações do aplicativo
+│   │   │   ├── models/         # Modelos de dados e ORM
+│   │   │   ├── routes/         # Definições de endpoints da API
+│   │   │   ├── schemas/        # Esquemas Pydantic para validação
+│   │   │   ├── services/       # Lógica de negócios
+│   │   │   │   └── main.py     # Ponto de entrada da aplicação
+│   │   │   └── utils/          # Funções utilitárias
+│   │   ├── config/             # Configurações de ambiente
+│   │   ├── tests/              # Testes unitários e de integração
+│   │   └── .env.example        # Exemplo de variáveis de ambiente
+│   ├── alembic/                # Migrações de banco de dados
+│   ├── Dockerfile              # Configuração para build do backend
+│   └── requirements.txt        # Dependências Python
+│
+├── docker-compose.yml          # Configuração do Docker Compose para desenvolvimento
+├── doc/                        # Documentação adicional do projeto
+├── images/                     # Imagens usadas no README
+└── LICENSE                     # Licença do projeto
 ```
 
 <p align="right">(<a href="#sistema-oco">voltar ao topo</a>)</p>
@@ -280,7 +305,7 @@ Link do Projeto: [GitHub](https://github.com/antoniocarelli/Modelo)
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/seu-usuario/nome-do-projeto.svg?style=for-the-badge
-[license-url]: https://github.com/antoniocarelli/Modelo/blob/master/LICENSE
+[license-url]: https://github.com/antoniocarelli/Modelo/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/antonio-carelli/
 [product-screenshot]: images/screenshot.jpeg
