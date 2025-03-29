@@ -306,7 +306,7 @@ Link do Projeto: [GitHub](https://github.com/antoniocarelli/Sistema-Oco)
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/antoniocarelli/Sistema-Oco.svg?style=for-the-badge
 [license-url]: https://github.com/antoniocarelli/Sistema-Oco/blob/main/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-shield]: https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://www.linkedin.com/in/antonio-carelli/
 [product-screenshot]: images/screenshot.jpeg
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
