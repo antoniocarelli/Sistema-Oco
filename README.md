@@ -5,7 +5,7 @@
 <!-- LOGO DO PROJETO -->
 <br />
 <div align="center">
-  <a href="https://github.com/antoniocarelli/Modelo">
+  <a href="https://github.com/antoniocarelli/Sistema-Oco">
     <img src="images/logo.png" alt="Logo" width="100%" height="100%">
   </a>
 
@@ -16,11 +16,11 @@
     <br />
     Implementa um sistema robusto de autenticação que inclui cadastro de usuários, login seguro e mecanismo de recuperação de senha.
     <br />
-    <a href="https://github.com/antoniocarelli/Modelo"><strong>Explore a documentação</strong></a>
+    <a href="https://github.com/antoniocarelli/Sistema-Oco"><strong>Explore a documentação</strong></a>
     <br />
-    <a href="https://github.com/antoniocarelli/Modelo/issues">Reportar Bug</a>
+    <a href="https://github.com/antoniocarelli/Sistema-Oco/issues">Reportar Bug</a>
     ·
-    <a href="https://github.com/antoniocarelli/Modelo/issues">Solicitar Funcionalidade</a>
+    <a href="https://github.com/antoniocarelli/Sistema-Oco/issues">Solicitar Funcionalidade</a>
   </p>
 </div>
 
@@ -96,7 +96,7 @@ Antes de começar, você precisa ter instalado em sua máquina:
 
 1. Clone o repositório
    ```sh
-   git clone https://github.com/antoniocarelli/Modelo.git
+   git clone https://github.com/antoniocarelli/Sistema-Oco.git
    cd nome-do-projeto
    ```
 2. Configure as variáveis de ambiente
@@ -265,7 +265,7 @@ Para implantar em produção:
     * [ ] Sub-funcionalidade A
     * [ ] Sub-funcionalidade B
 
-Veja os [issues abertos](https://github.com/antoniocarelli/Modelo/issues) para uma lista completa de funcionalidades propostas (e problemas conhecidos).
+Veja os [issues abertos](https://github.com/antoniocarelli/Sistema-Oco/issues) para uma lista completa de funcionalidades propostas (e problemas conhecidos).
 
 <p align="right">(<a href="#sistema-oco">voltar ao topo</a>)</p>
 
@@ -297,7 +297,7 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
 Antonio Carelli: [LinkedIn][linkedin-url]
 
-Link do Projeto: [GitHub](https://github.com/antoniocarelli/Modelo)
+Link do Projeto: [GitHub](https://github.com/antoniocarelli/Sistema-Oco)
 
 <p align="right">(<a href="#sistema-oco">voltar ao topo</a>)</p>
 
@@ -305,7 +305,7 @@ Link do Projeto: [GitHub](https://github.com/antoniocarelli/Modelo)
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/seu-usuario/nome-do-projeto.svg?style=for-the-badge
-[license-url]: https://github.com/antoniocarelli/Modelo/blob/main/LICENSE
+[license-url]: https://github.com/antoniocarelli/Sistema-Oco/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/antonio-carelli/
 [product-screenshot]: images/screenshot.jpeg
