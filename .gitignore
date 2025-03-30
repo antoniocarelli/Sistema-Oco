@@ -1,0 +1,100 @@
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Dependências
+/node_modules
+/venv
+/.venv
+/env
+/__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Frontend - Angular
+/frontend-angular/node_modules
+/frontend-angular/dist
+/frontend-angular/.angular/cache
+/frontend-angular/npm-debug.log
+/frontend-angular/yarn-error.log
+/frontend-angular/.angular
+
+# Backend - Python
+/backend-python/__pycache__/
+/backend-python/*.py[cod]
+/backend-python/*$py.class
+/backend-python/venv/
+/backend-python/.venv/
+/backend-python/env/
+/backend-python/.env
+/backend-python/instance/
+/backend-python/.pytest_cache/
+/backend-python/htmlcov/
+/backend-python/.coverage
+/backend-python/.tox/
+/backend-python/.coverage.*
+/backend-python/coverage.xml
+/backend-python/*.cover
+/backend-python/migrations/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.project
+.classpath
+.settings/
+
+# Docker
+.docker/data
+
+# Arquivos temporários
+tmp/
+temp/
+
+# Arquivos de certificado
+*.pem
+*.key
+*.crt
+
+# Arquivos de backup
+*.bak
+*.backup
+*~ 
