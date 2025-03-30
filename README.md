@@ -259,11 +259,9 @@ Para implantar em produção:
 <!-- ROADMAP -->
 ## Roadmap
 
-* [ ] Funcionalidade 1
-* [ ] Funcionalidade 2
-* [ ] Funcionalidade 3
-    * [ ] Sub-funcionalidade A
-    * [ ] Sub-funcionalidade B
+* [ ] Login com Google
+* [ ] Login com Facebook
+
 
 Veja os [issues abertos](https://github.com/antoniocarelli/Sistema-Oco/issues) para uma lista completa de funcionalidades propostas (e problemas conhecidos).
 
